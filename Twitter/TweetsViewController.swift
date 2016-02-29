@@ -5,6 +5,7 @@
 
 import UIKit
 
+
 enum TweetsControllerType {
     case Home
     case Mentions
@@ -14,10 +15,12 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet weak var tableView: UITableView!
     
-    var controllerType: TweetsControllerType?
     var refreshControl: UIRefreshControl!
     var tweets: [Tweet]!
     var replyTweet: Tweet?
+    var targetUser: User?
+    var controllerType: TweetsControllerType?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,9 +80,6 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("TweetCell", forIndexPath: indexPath) as! TweetCell
         cell.tweet = tweets[indexPath.row]
         cell.delegate = self
-        cell.parentViewController = self
-        let tapGestureRecognizer = UITapGestureRecognizer(target: cell, action: "onProfileImageTap:")
-        cell.profileImage.addGestureRecognizer(tapGestureRecognizer)
         return cell
     }
     
@@ -94,9 +94,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tweets[indexPath.row] = tweet
     }
     
-    func callSegueFromTweetCell(tweet: Tweet) {
+    func callComposeSegueFromTweetCell(tweet: Tweet) {
         replyTweet = tweet
         self.performSegueWithIdentifier("composeTweetSegue", sender: self)
+    }
+    
+    func callProfileSegueFromTweetCell(user: User) {
+        targetUser = user
+        self.performSegueWithIdentifier("profileSegue", sender: self)
     }
     
     // TweetDetailViewControllerDelegate methods
@@ -105,9 +110,14 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
         tableView.reloadData()
     }
     
-    func callSegueFromTweetDetailView(tweet: Tweet) {
+    func callComposeSegueFromTweetDetailView(tweet: Tweet) {
         replyTweet = tweet
         self.performSegueWithIdentifier("composeTweetSegue", sender: self)
+    }
+    
+    func callProfileSegueFromTweetDetailView(user: User) {
+        targetUser = user
+        self.performSegueWithIdentifier("profileSegue", sender: self)
     }
     
     // ComposeViewControllerDelegate methods
@@ -141,6 +151,11 @@ class TweetsViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let indexPath = tableView.indexPathForCell(sender as! UITableViewCell)!
             destinationViewController.tweet = tweets[indexPath.row]
             destinationViewController.delegate = self
+        } else if segue.identifier == "profileSegue" {
+            let destinationVC = segue.destinationViewController as! ProfileViewController
+            if targetUser != nil {
+                destinationVC.user = targetUser
+            }
         }
     }
     

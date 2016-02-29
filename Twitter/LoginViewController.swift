@@ -16,14 +16,16 @@ class LoginViewController: UIViewController {
         TwitterClient.sharedInstance.loginWithCompletion() {
             (user: User?, error: NSError?) in
             if user != nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                
                 let hamburgerViewController = storyboard.instantiateViewControllerWithIdentifier("HamburgerViewController") as!HamburgerViewController
+                
                 let menuViewController = storyboard.instantiateViewControllerWithIdentifier("MenuViewController") as! MenuViewController
+                
                 menuViewController.hamburgerViewController = hamburgerViewController
                 hamburgerViewController.menuViewController = menuViewController
                 
                 self.presentViewController(hamburgerViewController, animated: false, completion: nil)
-                
                 // perform segue
                 // self.performSegueWithIdentifier("loginSegue", sender: self)
             } else {

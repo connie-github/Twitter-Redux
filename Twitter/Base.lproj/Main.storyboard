@@ -202,6 +202,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="04X-9W-Tc8" id="iPw-TI-ewA"/>
+                        <segue destination="t10-jv-8eA" kind="push" identifier="profileSegue" id="SAB-a0-zQ1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="trV-iQ-NkS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -616,7 +617,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bno-3K-Jon" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="495" y="-561"/>
+            <point key="canvasLocation" x="74" y="-369"/>
         </scene>
         <!--Hamburger View Controller-->
         <scene sceneID="kH0-tm-Mlt">
@@ -632,11 +633,9 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vW1-lx-Iro" userLabel="Menu View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.80000000000000004" green="0.83921568629999999" blue="0.86666666670000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Pp-3O-4hg" userLabel="Content View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" red="0.97694798520000004" green="0.94315520760000005" blue="0.63799138369999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="qhJ-Bp-aLT" appends="YES" id="VU5-KD-C9u"/>
@@ -656,6 +655,7 @@
                             <constraint firstItem="3Pp-3O-4hg" firstAttribute="leading" secondItem="faM-XN-0gk" secondAttribute="leading" id="sSB-CI-wR6"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="hUy-h9-EIV"/>
                     <connections>
                         <outlet property="contentView" destination="3Pp-3O-4hg" id="MS5-UP-tui"/>
                         <outlet property="leftMarginConstraint" destination="sSB-CI-wR6" id="VDJ-lw-R4f"/>
@@ -669,7 +669,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="869" y="-561"/>
+            <point key="canvasLocation" x="477" y="-369"/>
         </scene>
         <!--Compose View Controller-->
         <scene sceneID="jdL-8Y-nbI">
@@ -788,7 +788,7 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="YKX-3L-eZj" kind="relationship" relationship="rootViewController" id="fkb-Bt-Aai"/>
+                        <segue destination="YKX-3L-eZj" kind="relationship" relationship="rootViewController" id="0oa-0X-Kf2"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t2Q-iY-26a" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -825,4 +825,7 @@
         <image name="retweet" width="19" height="16"/>
         <image name="twitter_logo_white" width="150" height="122"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="cke-Bl-Uod"/>
+    </inferredMetricsTieBreakers>
 </document>

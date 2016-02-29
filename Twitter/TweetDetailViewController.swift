@@ -8,7 +8,8 @@ import UIKit
 
 protocol TweetDetailViewControllerDelegate {
     func updateTweetDetailView(tweet: Tweet, index: Int)
-    func callSegueFromTweetDetailView(tweet: Tweet)
+    func callComposeSegueFromTweetDetailView(tweet: Tweet)
+    func callProfileSegueFromTweetDetailView(user: User)
 }
 
 class TweetDetailViewController: UIViewController {
@@ -72,16 +73,12 @@ class TweetDetailViewController: UIViewController {
     }
     
     @IBAction func onProfileImageTap(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
-            let profileViewController = storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-            profileViewController.user = tweet?.author
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        }
+        self.delegate?.callProfileSegueFromTweetDetailView(tweet.author!)
+
     }
     
-
     @IBAction func onReply(sender: AnyObject) {
-        self.delegate?.callSegueFromTweetDetailView(tweet)
+        self.delegate?.callComposeSegueFromTweetDetailView(tweet)
     }
     
     @IBAction func onRetweet(sender: AnyObject) {

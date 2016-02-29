@@ -8,7 +8,8 @@ import UIKit
 
 protocol TweetCellDelegate {
     func updateTweetCell(tweet: Tweet, cell: TweetCell)
-    func callSegueFromTweetCell(tweet: Tweet)
+    func callComposeSegueFromTweetCell(tweet: Tweet)
+    func callProfileSegueFromTweetCell(user: User)
 }
 
 class TweetCell: UITableViewCell {
@@ -23,8 +24,6 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var favoriteButton: UIButton!
     
     var delegate: TweetCellDelegate?
-    var parentViewController: UIViewController!
-    var user: User!
     
     var tweet: Tweet! {
         didSet {
@@ -41,10 +40,6 @@ class TweetCell: UITableViewCell {
             
             favoriteButton.selected = tweet.favorited!
             favoriteCountLabel.text = "\(tweet.favoriteCount!)"
-            
-//            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onProfileImageTap:")
-//            profileImage.userInteractionEnabled = true
-//            profileImage.addGestureRecognizer(tapGestureRecognizer)
         }
     }
     
@@ -53,21 +48,18 @@ class TweetCell: UITableViewCell {
         
         profileImage.layer.cornerRadius = 4
         profileImage.clipsToBounds = true
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "onProfileImageTap:")
+        profileImage.userInteractionEnabled = true
+        profileImage.addGestureRecognizer(tapGestureRecognizer)
     }
     
-    func onProfileImageTap(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
-            let storyboard = parentViewController?.storyboard
-            let navigationController = parentViewController?.navigationController
-            let profileViewController = storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-            
-            profileViewController.user = user
-            navigationController?.pushViewController(profileViewController, animated: true)
-        }
+    func onProfileImageTap(gesture: UIGestureRecognizer!) {
+        self.delegate?.callProfileSegueFromTweetCell(tweet.author!)
     }
     
     @IBAction func onReply(sender: AnyObject) {
-        self.delegate?.callSegueFromTweetCell(tweet)
+        self.delegate?.callComposeSegueFromTweetCell(tweet)
     }
 
     @IBAction func onRetweet(sender: AnyObject) {

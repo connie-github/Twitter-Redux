@@ -11,6 +11,10 @@ class HamburgerViewController: UIViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var leftMarginConstraint: NSLayoutConstraint!
     
+    var activeViewController: UIViewController!
+    var profileViewController: ProfileViewController!
+    var homeViewController: TweetsViewController!
+    
     var originalLeftMargin: CGFloat!
     
     var menuViewController: UIViewController! {
@@ -22,7 +26,7 @@ class HamburgerViewController: UIViewController {
                 oldMenuViewController.view.removeFromSuperview()
                 oldMenuViewController.didMoveToParentViewController(nil)
             }
-            
+                
             menuView.addSubview(menuViewController.view)
         }
     }
@@ -52,7 +56,8 @@ class HamburgerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-
+    
+    
     @IBAction func onPanGesture(sender: UIPanGestureRecognizer) {
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)

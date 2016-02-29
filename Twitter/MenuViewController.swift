@@ -8,6 +8,7 @@ import UIKit
 class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    
     private var profileNavigationController: UINavigationController!
     private var homeNavigationController: UINavigationController!
     private var mentionsNavigationController: UINavigationController!
@@ -20,6 +21,8 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.estimatedRowHeight = 65
+        tableView.rowHeight = UITableViewAutomaticDimension
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
@@ -42,7 +45,7 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return viewControllers.count ?? 0
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -54,11 +57,10 @@ class MenuViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return cell
     }
     
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         hamburgerViewController.contentViewController = viewControllers[indexPath.row]
     }
-    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
